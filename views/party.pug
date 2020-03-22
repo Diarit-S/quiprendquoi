@@ -1,0 +1,24 @@
+include ../partials/header.pug
+h1 Qui prend quoi ?
+h2= party.name
+h3 Créé par #{party.author}
+form.newItem(method="POST" action=`/item/${eventId}`)
+  div.newItem__fields
+    label(for="name") J'apporte :
+    input(name="name" id="name" required placeholder="Les chips")
+    label(for="user") Je suis :
+    input(name="user" id="user" required placeholder="Xavier")
+  button(type="submit") Ajouter
+ul.itemsList  
+  each item in items
+    li=item.name + ' : ' + item.user
+      form(method="POST" action=`/removeItem/${eventId}/${item._id}`)
+        button(type="submit") X
+
+label(for="url") Partagez l'événement
+input(id="url" value=`${url}` data-clipboard=`${url}` data-share-url=`${url}` data-share-title=`${party.name}` data-share-text=`${party.author} vous invite à rejoindre l'événément ${party.name}`)
+script.
+  party = !{JSON.stringify(party)}
+  apiUrl = !{JSON.stringify(apiUrl)}
+  eventId = !{JSON.stringify(eventId)}
+    
