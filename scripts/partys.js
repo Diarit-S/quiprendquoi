@@ -47,32 +47,3 @@ function writeItems(data) {
     list.appendChild(deleteForm)
   });
 }
-
-
-var socket = null;
-try {
-    socket = new WebSocket(`${apiUrl}/party/${party._id}`);
-} catch (exception) {
-    console.error(exception);
-}
-
-// Récupération des erreurs.
-// Si la connexion ne s'établie pas,
-// l'erreur sera émise ici.
-socket.onerror = function(error) {
-    console.error(error);
-};
-
-socket.onopen = function(event) {
-    console.log("Connexion établie.");
-
-    this.onclose = function(event) {
-        console.log("Connexion terminé.");
-    };
-
-    this.onmessage = function(event) {
-        console.log("Message:", event.data);
-    };
-
-    this.send("Hello world!");
-};
